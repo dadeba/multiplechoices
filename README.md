@@ -1,13 +1,12 @@
 # 選択式クイズのファインチューニング
 
 ## 準備
-condaでpython3.10の環境をセットアップ
+指定された計算機にログインしたあと、condaでpython3.10の環境をセットアップ
 
 ```bash
 conda create -n quiz python=3.10  
 conda activate quiz
 ```
-
 以降、このconda環境でプログラムを実行する。
 
 ## ファインチューニングに必要なライブラリ(Axolotl)をインストール
@@ -37,7 +36,7 @@ output_dir: ./open-small-qlora-out      ## 学習結果を出力するディレ�
 以下の部分の"path"に学習用のクイズファイルを指定する。
 ```
 datasets:
-  - path: datasets/train-5-inst.json
+  - path: train-5-inst.json
 ```
 
 クイズファイルのフォーマットは以下の形式を想定しているので、クイズ王のファイル(train_questions.json)から変換する。
@@ -51,6 +50,16 @@ datasets:
 "instrucion"の部分に「問題」と「選択肢」をまとめて入れる。
 最後のキーワード「### 回答:」は、opencalmモデルの学習には必ず必要。
 "output"は問題に対する回答。
+
+ファインチューニングの実行
+```bash
+accelerate launch -m axolotl.cli.train qlora-opencalm.yml
+```
+
+"accelerate"コマンドにpathが通ってない場合には、以下を一度実行する。
+```bash
+export PATH=$PATH:/home/$USER/.local/bin
+```
 
 ### ファインチューニングしたあとの評価
 サンプルで実行するためのスクリプト(run_quiz.py)を実行する。

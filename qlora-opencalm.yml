@@ -11,7 +11,7 @@ load_in_4bit: true
 strict: false
 
 datasets:
-  - path: datasets/train-5-inst.json
+  - path: train-5-inst.json
     type:
       system_prompt: ""
       field_system: system
