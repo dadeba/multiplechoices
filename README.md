@@ -88,5 +88,5 @@ result.json                                                  : 0.35
 正解率の評価は、"dev1_questions.json"と"dev2_questions.json"の両方で評価すること。
 
 # 評価
-サンプルコードはopencalmの最も小さいモデル(https://huggingface.co/cyberagent/open-calm-small)をファインチューニングする。
+サンプルコードはopencalmの最も小さいモデル( https://huggingface.co/cyberagent/open-calm-small )をファインチューニングする。
 これはパラメータ数が小さいので、他のopencalmモデル(medium,large,1b,3b,7b)についても評価してみること。
