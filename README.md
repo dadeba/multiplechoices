@@ -20,6 +20,10 @@ pip3 install -e '.[flash-attn,deepspeed]'
 ```
 
 ## open-calmのモデルをファインチューニング(学習)する
+このサンプルコードは、日本語LLM(opencalmのsmall/parameters 160M)を、量子化とLoRA(Low-Rank Adaptation)の組み合わせでファインチューニングする。
+
+このsmallモデルの場合、モデルサイズが小さいので量子化は必ずしも必要ではないが、
+より大きいモデルでメモリ量を削減して計算を高速にするため、量子化を適用している。
 
 ### 詳細
 "qlora-opencalm.yml"がファインチューニングの設定ファイル。これを必要に応じて変更する必要がある。
@@ -67,7 +71,7 @@ python3 run_quiz.py
   }
 ```
 
-訓練用のフォーマットとは異なるので、それに気をつけてクイズ王のファイルから変換する。
+学習のjsonファイルとは異なるので、それに気をつけてクイズ王のファイル(dev1_questions.json/dev2_questions.json)から変換する。
 サンプルとして"dev1_questions.json"の一部を変換したファイルを"quiz.json"として含めている。
 
 このプログラムを実行すると、"result.log"と"result.json"というファイルが出力される。
@@ -83,4 +87,6 @@ result.json                                                  : 0.35
 この場合正解率は35パーセントということになる。
 正解率の評価は、"dev1_questions.json"と"dev2_questions.json"の両方で評価すること。
 
-
+# 評価
+サンプルコードはopencalmの最も小さいモデル(https://huggingface.co/cyberagent/open-calm-small)をファインチューニングする。
+これはパラメータ数が小さいので、他のopencalmモデル(medium,large,1b,3b,7b)についても評価してみること。
