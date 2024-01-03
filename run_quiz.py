@@ -24,10 +24,12 @@ def load(model_name, peft_model_name = None):
         model = PeftModel.from_pretrained(model, peft_model_name)
         
     generation_config = GenerationConfig(
-        max_new_tokens=64*2,
+        max_new_tokens=32,
         do_sample=True,
         temperature=0.3,
         pad_token_id=tokenizer.pad_token_id,
+        bos_token_id=tokenizer.bos_token_id,
+        eos_token_id=tokenizer.eos_token_id
     )
 
     return model, generation_config, tokenizer
