@@ -96,6 +96,12 @@ result.json                                                  : 0.35
 この場合正解率は35パーセントということになる。
 正解率の評価は、"dev1_questions.json"と"dev2_questions.json"の両方で評価すること。
 
+#### TODO
+評価時にはpromptを正規化しないと正解判定を間違う場合がある。
+問題文には最後に疑問符があるが、open-calmは"?"(ASCIIの半角相当の疑問符)と"？"(UTF-8の全角相当の疑問符)が同じtokenのため、
+出力からprompt部分を取り除くことができずに正解判定が正しく動作しない。
+open-calmのtokenizerには数字でも同様の問題がある。
+
 # 評価
 サンプルコードはopencalmの最も小さいモデル( https://huggingface.co/cyberagent/open-calm-small )をファインチューニングする。
 これはパラメータ数が小さいので、他のopencalmモデル(medium,large,1b,3b,7b)についても評価してみること。
