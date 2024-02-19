@@ -48,7 +48,7 @@ def run(model, config, tokenizer, ptext):
 quiz_file = "quiz.json"
 data = load_dataset("json", data_files=quiz_file)
 
-model_id = 'open-calm-small-qlora-out'
+model_id = 'open-calm-7b-xxx-qlora-out'
 model, cfg, tokenizer = load(model_id)
 
 quiz_base = quiz_file.split('.')[0]
@@ -66,10 +66,9 @@ with open(filename, 'w', encoding="utf-8") as f:
     count_ans = 0
     for data_point in data['train']:
         q = data_point['instruction']
-        i = data_point['input']
         o = data_point['output']
         
-        ptext = f"{q}\n\n選択肢\n\n{i}\n\n回答:\n"
+        ptext = q
         res = run(model, cfg, tokenizer, ptext)
         count_all = count_all + 1
 
@@ -97,11 +96,11 @@ with open(filename, 'w', encoding="utf-8") as f:
         id = count_all
         new_data = {}
         new_data['ID']   = id
-        new_data['instruction'] = data_point['instruction']
-        new_data['input'] = data_point['input']        
+        new_data['instruction'] = q
         new_data['correct_answer'] = o
         new_data['prompt'] = ptext
         new_data['output'] = res
+        new_data['out_str'] = out_str
         new_data['hit'] = hit
         js.append(new_data)
 

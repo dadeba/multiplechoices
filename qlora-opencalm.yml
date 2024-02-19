@@ -1,5 +1,5 @@
 base_model: cyberagent/open-calm-small
-output_dir: ./open-small-qlora-out
+output_dir: ./open-calm-small-qlora-out
 
 model_type: AutoModelForCausalLM
 tokenizer_type: AutoTokenizer
