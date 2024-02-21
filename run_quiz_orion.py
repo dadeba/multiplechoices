@@ -16,8 +16,9 @@ def load(model_name, peft_model_name = None):
     )
 
     model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto",
-                                                 quantization_config=quantization_config)
-    tokenizer = AutoTokenizer.from_pretrained(model_id)
+                                                 quantization_config=quantization_config,
+                                                 trust_remote_code=True)
+    tokenizer = AutoTokenizer.from_pretrained(model_id,trust_remote_code=True)
 
     if peft_model_name != None:
         config = PeftConfig.from_pretrained(peft_model_name)
@@ -48,11 +49,11 @@ def run(model, config, tokenizer, ptext):
 quiz_file = "quiz.json"
 data = load_dataset("json", data_files=quiz_file)
 
-model_id = 'open-calm-small-qlora-out'
+model_id = 'Orion-14B-qlora-out'
 model, cfg, tokenizer = load(model_id)
 
 quiz_base = quiz_file.split('.')[0]
-output = "result"
+output = "result2"
 filename = f"{output}.log"
 print(filename)
 
@@ -72,21 +73,26 @@ with open(filename, 'w', encoding="utf-8") as f:
         res = run(model, cfg, tokenizer, ptext)
         count_all = count_all + 1
 
-        out_str = res.replace(ptext,'')
-        match = re.search(r"(\d+):", out_str)
+        # Extract everything after "回答："
+        answer = re.search(r'### 回答：\n(.+)', res)
 
         hit = False
-        if match:
-            ans = match.group(1)
-            x = (o[0] == ans)
-            if x:
-                count_ans = count_ans + 1
-                hit = True
+        if answer:
+            out_str = answer.group(1)
+            match = re.search(r"(\d+)：", out_str)
+            if match:
+                ans = match.group(1)
+                x = (o[0] == ans)
+                if x:
+                    count_ans = count_ans + 1
+                    hit = True
                 
-            l = f"{res} / {x} : {float(count_ans)/float(count_all)}"
+                l = f"{res} / {x} : {float(count_ans)/float(count_all)}"
+            else:
+                l = f"{res} / strange response!!"            
         else:
-            l = f"{res} / strange response!!"            
-
+            l = ""
+                
         f.write(l + "\n")
         f.write("\n---\n")
         f.flush()
