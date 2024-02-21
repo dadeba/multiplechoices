@@ -48,7 +48,7 @@ def run(model, config, tokenizer, ptext):
 quiz_file = "quiz.json"
 data = load_dataset("json", data_files=quiz_file)
 
-model_id = 'open-calm-7b-xxx-qlora-out'
+model_id = 'open-calm-small-qlora-out'
 model, cfg, tokenizer = load(model_id)
 
 quiz_base = quiz_file.split('.')[0]

@@ -1,5 +1,5 @@
-base_model: cyberagent/open-calm-small
-output_dir: ./open-calm-small-qlora-out
+base_model: OrionStarAI/Orion-14B-Base
+output_dir: ./Orion-14B-qlora-out
 
 model_type: AutoModelForCausalLM
 tokenizer_type: AutoTokenizer
@@ -36,8 +36,6 @@ lora_alpha: 16
 lora_dropout: 0.05
 lora_target_linear: true
 lora_fan_in_fan_out:
-lora_target_modules:
-  - query_key_value
 
 wandb_project:
 wandb_entity:
@@ -47,7 +45,7 @@ wandb_log_model:
 
 gradient_accumulation_steps: 16
 micro_batch_size: 4
-num_epochs: 3
+num_epochs: 1
 optimizer: adamw_bnb_8bit
 lr_scheduler: cosine
 learning_rate: 0.00055
@@ -57,7 +55,7 @@ group_by_length: false
 
 gradient_checkpointing: true
 early_stopping_patience:
-resume_from_checkpoint: false
+resume_from_checkpoint:
 local_rank:
 logging_steps: 1
 xformers_attention: false
@@ -67,7 +65,7 @@ warmup_steps: 10
 eval_steps: 0.05
 eval_table_size:
 save_steps:
-debug: false
+debug:
 deepspeed:
 weight_decay: 0.0
 fsdp:

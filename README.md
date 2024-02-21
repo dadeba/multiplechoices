@@ -47,18 +47,12 @@ datasets:
   }
 ```
 
-"instrucion"の部分に「問題」と「選択肢」をまとめて入れる。
-最後のキーワード「### 回答:」は、opencalmモデルの学習には必ず必要。
+"instrucion"の部分に「問題」と「選択肢」をまとめて入れる。最後の部分「### 回答:」は、opencalmモデルの学習には必ず必要。
 "output"は問題に対する回答。
 
 ファインチューニングの実行
 ```bash
 accelerate launch -m axolotl.cli.train qlora-opencalm.yml
-```
-
-"accelerate"コマンドにpathが通ってない場合には、以下を一度実行する。
-```bash
-export PATH=$PATH:/home/$USER/.local/bin
 ```
 
 ### ファインチューニングしたあとの評価
@@ -88,10 +82,10 @@ jsonファイルを読み込んで、正解率を計算するサンプルコー�
 ```bash
 python analysiy.py
 
-result.json                                                  : 0.35
+result.json                                                  : 0.47058823529411764
 ```
 
-この場合正解率は35パーセントということになる。
+この場合正解率は約47パーセントということになる。
 正解率の評価は、"dev1_questions.json"と"dev2_questions.json"の両方で評価すること。
 
 #### TODO
@@ -100,11 +94,7 @@ result.json                                                  : 0.35
 出力からprompt部分を取り除くことができずに正解判定が正しく動作しない。
 open-calmのtokenizerには数字でも同様の問題がある。
 
-# 評価
-サンプルコードはopencalmの最も小さいモデル( https://huggingface.co/cyberagent/open-calm-small )をファインチューニングする。
-これはパラメータ数が小さいので、他のopencalmモデル(medium,large,1b,3b,7b)についても評価してみること。
-
-# QA
+# Evaluation of QA datasets
 ### Table for key: AI王 dev1  
 | Model | Environment | Score | Latency |
 | --- | --- | --- | --- |
@@ -213,7 +203,9 @@ open-calmのtokenizerには数字でも同様の問題がある。
 | open-calm-medium               | dev4 | 0.354 | 2461.0 |
 | open-calm-small                | dev4 | 0.205 | 1205.0 |
 
-# QMA
+# Evaluation of QMA datasets
+Quiz source: https://litz.sakura.ne.jp/konmai/qma5.html 四択問題
+
 ### Table for 芸能
 | Model | Environment | Score | Latency |
 | --- | --- | --- | --- |
