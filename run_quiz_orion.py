@@ -50,12 +50,11 @@ quiz_file = "quiz.json"
 data = load_dataset("json", data_files=quiz_file)
 
 model_id = 'Orion-14B-qlora-out'
-model, cfg, tokenizer = load(model_id)
-
-quiz_base = quiz_file.split('.')[0]
-output = "result2"
+output = model_id
 filename = f"{output}.log"
-print(filename)
+
+print(f"Loading {model_id} ...")
+model, cfg, tokenizer = load(model_id)
 
 st = time.time()
 js = []

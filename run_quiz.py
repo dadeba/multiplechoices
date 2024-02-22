@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*- 
+import sys
 import re
 import torch
 import time
@@ -48,13 +49,17 @@ def run(model, config, tokenizer, ptext):
 quiz_file = "quiz.json"
 data = load_dataset("json", data_files=quiz_file)
 
-model_id = 'open-calm-small-qlora-out'
-model, cfg, tokenizer = load(model_id)
+if len(sys.argv) == 2:
+    model_id = sys.argv[1]
+    output = sys.argv[1]
+else:
+    model_id = 'open-calm-small-qlora-out'
+    output = "result"
 
-quiz_base = quiz_file.split('.')[0]
-output = "result"
 filename = f"{output}.log"
-print(filename)
+
+print(f"Loading {model_id} ...")
+model, cfg, tokenizer = load(model_id)
 
 st = time.time()
 js = []

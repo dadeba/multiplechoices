@@ -1,5 +1,5 @@
 base_model: tokyotech-llm/Swallow-7b-hf
-output_dir: ./swallow-7b-qlora-out
+output_dir: ./Swallow-7b-qlora-out
 
 model_type: LlamaForCausalLM
 is_llama_derived_model: true
